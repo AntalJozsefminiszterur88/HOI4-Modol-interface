@@ -1,0 +1,12 @@
+# Node artifacts
+node_modules/
+dist/
+
+# PHP Composer artifacts
+vendor/
+
+# Environment files
+.env
+
+# Logs
+*.log
