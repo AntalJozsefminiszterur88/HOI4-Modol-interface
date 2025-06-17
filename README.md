@@ -2,7 +2,8 @@
 
 This repository contains a very lightweight structure for building a HOI4 modding interface.
 The root `index.html` now includes a simple interface that fetches and displays
-a list of mods from the Laravel API.
+a list of mods from the Laravel API. You can filter the list with a search box
+and create new mods using a small form that submits to the backend API.
 
 - `frontend` – a React (Vite) based single page application.
 - `backend` – a Laravel compatible API using MySQL.
