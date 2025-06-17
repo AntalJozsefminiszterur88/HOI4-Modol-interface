@@ -2,9 +2,51 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8">
-  <title>Hello World</title>
+  <title>HOI4 Modding Interface</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+
+    .mod-list {
+      margin-top: 20px;
+    }
+
+    .mod-item {
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .mod-item h3 {
+      margin: 0 0 5px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello World</h1>
+  <h1>HOI4 Mods</h1>
+  <div id="mods" class="mod-list"></div>
+  <script>
+    fetch('/api/mods-all')
+      .then(res => res.json())
+      .then(mods => {
+        const container = document.getElementById('mods');
+        mods.forEach(mod => {
+          const div = document.createElement('div');
+          div.className = 'mod-item';
+          div.innerHTML = `<h3>${mod.name} <small>${mod.version ? mod.version : ''}</small></h3>` +
+            `<p>${mod.description ? mod.description : ''}</p>`;
+          container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        document.getElementById('mods').textContent = 'Failed to load mods.';
+        console.error('Error loading mods', err);
+      });
+  </script>
 </body>
 </html>
