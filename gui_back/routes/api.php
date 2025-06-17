@@ -12,5 +12,6 @@ Route::get('/user', function (Request $request) {
 Route::get("/medias-all", [MediaController::class, "index"]);
 
 Route::get('/mods-all', [ModController::class, 'index']);
+Route::post('/mods', [ModController::class, 'store']);
 
 
