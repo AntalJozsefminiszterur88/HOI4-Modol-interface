@@ -10,4 +10,33 @@ class ModController extends Controller
     {
         return Mod::all();
     }
+
+    public function store(\Illuminate\Http\Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'version' => 'nullable|string|max:50',
+        ]);
+
+        $mod = Mod::create($data);
+        return response()->json($mod, 201);
+    }
+
+    public function show(Mod $mod)
+    {
+        return $mod;
+    }
+
+    public function update(Mod $mod, \Illuminate\Http\Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+            'version' => 'nullable|string|max:50',
+        ]);
+
+        $mod->update($data);
+        return response()->json($mod);
+    }
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Mod Detail</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #1e1e1e;
+      color: #eee;
+    }
+    input, textarea, button {
+      font: inherit;
+      padding: 6px;
+      margin: 4px 0;
+      border-radius: 4px;
+      border: 1px solid #666;
+      background: #2e2e2e;
+      color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html">&larr; Back to list</a>
+  <h1 id="title">Mod</h1>
+
+  <form id="edit-mod">
+    <input name="name" type="text" placeholder="Name" required />
+    <input name="version" type="text" placeholder="Version" />
+    <textarea name="description" placeholder="Description"></textarea>
+    <button type="submit">Save</button>
+  </form>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+
+    const form = document.getElementById('edit-mod');
+
+    function loadMod() {
+      fetch(`/api/mods/${id}`)
+        .then(res => res.json())
+        .then(mod => {
+          document.getElementById('title').textContent = mod.name;
+          form.name.value = mod.name;
+          form.version.value = mod.version || '';
+          form.description.value = mod.description || '';
+        })
+        .catch(() => {
+          document.body.textContent = 'Failed to load mod.';
+        });
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const payload = {
+        name: form.name.value,
+        version: form.version.value,
+        description: form.description.value
+      };
+      fetch(`/api/mods/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(res => res.json())
+        .then(mod => {
+          document.getElementById('title').textContent = mod.name;
+          alert('Saved');
+        })
+        .catch(() => alert('Failed to save mod'));
+    });
+
+    loadMod();
+  </script>
+</body>
+</html>
