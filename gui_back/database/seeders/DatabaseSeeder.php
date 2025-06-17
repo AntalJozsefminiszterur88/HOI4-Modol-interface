@@ -47,6 +47,14 @@ class DatabaseSeeder extends Seeder
             'original_url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVyiGFYIoPgISVR15LFQN1ZU054xBxfkHOfA&s',
         ]);
 
+        DB::table('mods')->insert([
+            'name' => 'Test Mod',
+            'description' => 'Example mod seeded for development.',
+            'version' => '0.1.0',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
 
 
     }
